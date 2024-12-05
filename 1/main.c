@@ -72,6 +72,18 @@ void mergeSort(unsigned int *arr, unsigned int left, unsigned int right)
 	}
 }
 
+unsigned int getSimilarityScore(unsigned int number, unsigned int *arr)
+{
+	unsigned int i, occurences = 0;
+	
+	for (i = 0; i < 1000; i++)
+	{	
+		if (number == *(arr+i))
+			occurences++;
+	}
+	return number * occurences;
+}
+
 int main()
 {
 	FILE *filePtr = fopen("//vdi-ntfile01/UserProfiles/JacobM/Desktop/AoC_2024/1/input.txt", "r");
@@ -94,7 +106,7 @@ int main()
 	mergeSort(arr1, 0, capacity - 1);
 	mergeSort(arr2, 0, capacity - 1);
 	
-	// get total distance
+	// PART 1: get total distance
 	int i, difference;
 	unsigned int totalDistance = 0;
 	
@@ -105,6 +117,16 @@ int main()
 		totalDistance += difference;
 	}
 	printf("%d\n", totalDistance);
+	
+	// PART 2: get similarity score	
+	unsigned int totalSimilarityScore = 0;
+	
+	for (i = 0; i < capacity; i++)
+	{	
+		totalSimilarityScore += getSimilarityScore(*(arr1 + i), arr2);
+	}
+	
+	printf("%d\n", totalSimilarityScore);
 	
 	// clean up
 	free(arr1);
